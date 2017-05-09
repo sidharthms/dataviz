@@ -24,5 +24,5 @@ for s in range(len(args.split) + 1):
 
     r_input = '_r_length_dist_input' + str(s) + '.csv'
     table.to_csv(os.path.join(args.dir, r_input))
-    call(["Rscript", "r4_lengths_histogram.R", args.dir, r_input, args.output + '_s' + str(s) + '.png'])
+    call(["Rscript", "r4_lengths_histogram.R", args.dir, r_input, args.output + '_s' + str(s) + '.html'])
     os.remove(os.path.join(args.dir, r_input))
