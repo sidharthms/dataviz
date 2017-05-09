@@ -19,9 +19,12 @@ parser.add_argument('--split', nargs='+', type=int, help='Number of assignments 
 args = parser.parse_args()
 
 def create_vis(matrix, type):
+    embs = matrix.mean(axis=1)
+    matrix = matrix[embs.argsort()]
+
     r_input = '_r_length_dist_input' + str(s) + '.csv'
     pd.DataFrame(matrix).to_csv(os.path.join(args.dir, r_input), index=False)
-    call(["Rscript", "r5_students_fancy_3d.R", args.dir, r_input, args.output + '_s' + str(s) + 
+    call(["Rscript", "r5_students_fancy_3d.R", args.dir, r_input, args.output + '_s' + str(s) +
           '_' + type + '.html'])
     os.remove(os.path.join(args.dir, r_input))
 
