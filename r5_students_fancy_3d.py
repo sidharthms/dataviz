@@ -18,14 +18,15 @@ parser.add_argument('--split', nargs='+', type=int, help='Number of assignments 
                     'one kind, 21-40 are of a 2nd kind, 40-end are of a 3rd kind.')
 args = parser.parse_args()
 
-def create_vis(matrix, save_path):
+def create_vis(matrix, type):
     r_input = '_r_length_dist_input' + str(s) + '.csv'
     pd.DataFrame(matrix).to_csv(os.path.join(args.dir, r_input), index=False)
-    call(["Rscript", "r5_students_fancy_3d.R", args.dir, r_input, args.output + '_s' + str(s) + '.png'])
+    call(["Rscript", "r5_students_fancy_3d.R", args.dir, r_input, args.output + '_s' + str(s) + 
+          '_' + type + '.html'])
     os.remove(os.path.join(args.dir, r_input))
 
 data = common.load_data(os.path.join(args.dir, args.input + '.json'), args.split)
 for s in range(len(args.split) + 1):
-    create_vis(data['lengths_matrices'][s])
-    create_vis(data['scores_matrices'][s])
-    create_vis(data['time_matrices'][s])
+    create_vis(data['lengths_matrices'][s], 'lengths')
+    create_vis(data['scores_matrices'][s], 'scores')
+    create_vis(data['time_matrices'][s], 'time')
