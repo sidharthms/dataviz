@@ -49,10 +49,10 @@ def plot_data(matrices, labels, save_path, y_name, reverse_sort=False):
 
 
     sns.set(font_scale=1)
-    fig, ax = plt.subplots(figsize=(1.6 * numstudents, 10))
+    fig, ax = plt.subplots(figsize=(1.8 * numstudents, 12))
     ax = sns.violinplot(x="Student Name", y=y_name, ax=ax, data=table_melted,
                         size=20, scale='width', cut=0, inner='stick', hue='Type', split=True, palette="Set2")
-    fig.savefig(save_path, dpi=100)
+    fig.savefig(save_path, dpi=90)
 
 data = common.load_data(os.path.join(args.dir, args.input + '.json'), [args.split])
 

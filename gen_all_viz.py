@@ -2,6 +2,7 @@ import pdb
 import os
 import argparse
 import glob
+from subprocess import call
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dir', help='Working directory. This dir must contain the inputs. ' +
@@ -17,10 +18,12 @@ norun = ['gen_all_viz.py', 'common.py']
 scripts = [s for s in glob.glob('*.py') if s not in norun]
 
 for s in scripts:
-    call('python', s, '--dir', args.dir, '--input', args.input, '--split', args.split, '--output', s[:2])
+	call(['python', s, '--dir', args.dir, '--input', args.input, '--split', str(args.split[0]), '--output', s[:-3]])
 
 # Additional runs:
-call('python', 'p2_students_violin.py', '--dir', args.dir, '--input', args.input, '--split', args.split, '--output', 'p2_20',
-     '--numstudents', 20)
-call('python', 'r5_students_fancy_3d.py', '--dir', args.dir, '--input', args.input, '--split', args.split, '--output', 'r5_nosort',
-     '--no_sort')
+call(['python', 'p2_students_violin.py', '--dir', args.dir, '--input', args.input, '--split', str(args.split[0]), '--output', 'p2_students_violin_20',
+     '--numstudents', str(20)])
+call(['python', 'r5_students_fancy_3d.py', '--dir', args.dir, '--input', args.input, '--split', str(args.split[0]), '--output', 'r5_students_fancy_3d__nosort',
+     '--no_sort'])
+
+print('All Done :)')
