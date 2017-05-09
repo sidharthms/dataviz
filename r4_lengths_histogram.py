@@ -20,19 +20,9 @@ args = parser.parse_args()
 
 data = common.load_data(os.path.join(args.dir, args.input + '.json'), args.split)
 for s in range(len(args.split) + 1):
-    postlengths_req_dict = data['postlengths_req_dict'][s]
-
-    dists = []
-    keys = sorted(postlengths_req_dict.keys())
-    for k in keys:
-        dist = np.array(postlengths_req_dict[k])
-        dists.append(np.stack([dist, k * np.ones((dist.shape[0]))], axis=1))
-    merged_matrix = np.concatenate(dists, axis=0)
-
-    table = pd.DataFrame(data=merged_matrix, columns=['Length', 'NumReqPosts'])
-    table['NumReqPosts'] = table['NumReqPosts'].map(lambda p: 'Req: ' + str(p))
+    table = pd.DataFrame(data=data['lengths_matrices'][s])
 
     r_input = '_r_length_dist_input' + str(s) + '.csv'
     table.to_csv(os.path.join(args.dir, r_input))
-    call(["Rscript", "r3_length_reqposts.R", args.dir, r_input, args.output + '_s' + str(s) + '.png'])
+    call(["Rscript", "r4_lengths_histogram.R", args.dir, r_input, args.output + '_s' + str(s) + '.png'])
     os.remove(os.path.join(args.dir, r_input))

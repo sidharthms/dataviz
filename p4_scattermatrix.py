@@ -54,8 +54,5 @@ for s in range(len(args.split) + 1):
     table_pivot = table_pivot[['Assignment', 'Grade', 'Submit Time', 'Total Post Length']]
 
     plt.figure()
-    ax = sns.pairplot(table_pivot, hue='Grade', size=10)
-    # ax.set(ylabel='Submit Time  |  Post Length/100  |  Score')
-    # ax.set_xticks(range(1, scores.shape[1]+1))
-    # plt.legend(loc='best')
-    ax.fig.savefig(os.path.join(args.dir, args.output + '_s' + str(s) + '.png'), dpi=100)
+    ax = sns.pairplot(table_pivot, hue='Grade', size=5)
+    ax.fig.savefig(os.path.join(args.dir, args.output + '_s' + str(s) + '.png'), dpi=150)
