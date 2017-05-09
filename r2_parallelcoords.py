@@ -11,7 +11,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--dir', help='Working directory. This dir must contain the inputs. ' +
                     'Vis outputs and any intermediate outputs are written to this dir.')
 parser.add_argument('--input', help='Input json filename in the working dir excluding the \'.json\' extension.')
-parser.add_argument('--output', help='Output png filename int the working dir excluding the \'.png\' extension.')
+parser.add_argument('--output', help='Output png filename in the working dir excluding the \'.png\' extension.')
 parser.add_argument('--threshs', nargs='+', type=int, default=[30, 40],
                     help='Thresholds for grades in increasing order. E.g. --thresh 30 40 means 0-29 is C ' +
                     '30-39 is B and >=40 is A. This is used for color coding only.')

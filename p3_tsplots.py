@@ -11,11 +11,6 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-def plot_data(table):
-    plot = sns.tsplot(data=table, time='Assignment', unit='Student Name',
-           condition='Type', value='Value', ci=[68, 95])
-    plot.savefig(save_path, dpi=100)
-
 parser = argparse.ArgumentParser()
 parser.add_argument('--dir', help='Working directory. This dir must contain the inputs. ' +
                     'Vis outputs and any intermediate outputs are written to this dir.')

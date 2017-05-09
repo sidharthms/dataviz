@@ -11,7 +11,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--dir', help='Working directory. This dir must contain the inputs. ' +
                     'Vis outputs and any intermediate outputs are written to this dir.')
 parser.add_argument('--input', help='Input json filename in the working dir excluding the \'.json\' extension.')
-parser.add_argument('--output', help='Output png filename int the working dir excluding the \'.png\' extension.')
+parser.add_argument('--output', help='Output png filename in the working dir excluding the \'.png\' extension.')
 parser.add_argument('--split', nargs='+', type=int, help='Number of assignments of each type. ' +
                     'Typically just the number of discussion assignments, but can include further ' +
                     'kinds of assignments. E.g. `--split 20 40` means assignments 1-20 are of ' +

@@ -18,21 +18,14 @@ parser.add_argument('--split', nargs='+', type=int, help='Number of assignments 
                     'one kind, 21-40 are of a 2nd kind, 40-end are of a 3rd kind.')
 args = parser.parse_args()
 
-data = common.load_data(os.path.join(args.dir, args.input + '.json'), args.split, req=True)
-for s in range(len(args.split) + 1):
-    postlengths_req_dict = data['postlengths_req_dict'][s]
-
-    dists = []
-    keys = sorted(postlengths_req_dict.keys())
-    for k in keys:
-        dist = np.array(postlengths_req_dict[k])
-        dists.append(np.stack([dist, k * np.ones((dist.shape[0]))], axis=1))
-    merged_matrix = np.concatenate(dists, axis=0)
-
-    table = pd.DataFrame(data=merged_matrix, columns=['Length', 'NumReqPosts'])
-    table['NumReqPosts'] = table['NumReqPosts'].map(lambda p: 'Req: ' + str(p))
-
+def create_vis(matrix, save_path):
     r_input = '_r_length_dist_input' + str(s) + '.csv'
-    table.to_csv(os.path.join(args.dir, r_input))
-    call(["Rscript", "r3_length_reqposts.R", args.dir, r_input, args.output + '_s' + str(s) + '.png'])
+    pd.DataFrame(matrix).to_csv(os.path.join(args.dir, r_input), index=False)
+    call(["Rscript", "r5_students_fancy_3d.R", args.dir, r_input, args.output + '_s' + str(s) + '.png'])
     os.remove(os.path.join(args.dir, r_input))
+
+data = common.load_data(os.path.join(args.dir, args.input + '.json'), args.split)
+for s in range(len(args.split) + 1):
+    create_vis(data['lengths_matrices'][s])
+    create_vis(data['scores_matrices'][s])
+    create_vis(data['time_matrices'][s])

@@ -21,7 +21,7 @@ def load_data(file_path, splits, req=False):
             lengths_matrices.append(np.zeros((numstudents, splits[s+1] - splits[s])))
 
         req_posts = []
-        posts_req_dict = [defaultdict(list) for s in range(len(splits)-1)]
+        posts_req_dict = [[defaultdict(list), defaultdict(list)] for s in range(len(splits)-1)]
         postlengths_req_dict = [defaultdict(list) for s in range(len(splits)-1)]
 
         if req:
@@ -49,7 +49,11 @@ def load_data(file_path, splits, req=False):
                     lengths_matrices[split][s, a] = total_length
 
                     if req:
-                        posts_req_dict[split][req_posts[a + start]].append(len(student["grades"][a + start]["posts"]))
+                        if time_matrices[split][s, a] < 0:
+                            posts_req_dict[split][0][req_posts[a + start]].append(len(student["grades"][a + start]["posts"]))
+                        else:
+                            posts_req_dict[split][1][req_posts[a + start]].append(len(student["grades"][a + start]["posts"]))
+                            
                         postlengths_req_dict[split][req_posts[a + start]].append(total_length)
 
     return {
