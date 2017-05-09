@@ -11,7 +11,8 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--dir', help='Working directory. This dir must contain the inputs. ' +
                     'Vis outputs and any intermediate outputs are written to this dir.')
 parser.add_argument('--input', help='Input json filename in the working dir excluding the \'.json\' extension.')
-parser.add_argument('--output', help='Output png filename in the working dir excluding the \'.png\' extension.')
+parser.add_argument('--output', help='Output html filename in the working dir excluding the \'.html\' extension.')
+parser.add_argument('--no_sort', action='store_true', help='Do not sort students according to performance.')
 parser.add_argument('--split', nargs='+', type=int, help='Number of assignments of each type. ' +
                     'Typically just the number of discussion assignments, but can include further ' +
                     'kinds of assignments. E.g. `--split 20 40` means assignments 1-20 are of ' +
@@ -19,10 +20,11 @@ parser.add_argument('--split', nargs='+', type=int, help='Number of assignments 
 args = parser.parse_args()
 
 def create_vis(matrix, type):
-    embs = matrix.mean(axis=1)
-    matrix = matrix[embs.argsort()]
+    if not args.no_sort:
+        embs = matrix.mean(axis=1)
+        matrix = matrix[embs.argsort()]
 
-    r_input = '_r_length_dist_input' + str(s) + '.csv'
+    r_input = '_r_students_dist_input' + str(s) + '.csv'
     pd.DataFrame(matrix).to_csv(os.path.join(args.dir, r_input), index=False)
     call(["Rscript", "r5_students_fancy_3d.R", args.dir, r_input, args.output + '_s' + str(s) +
           '_' + type + '.html'])

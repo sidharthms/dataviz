@@ -32,7 +32,7 @@ for s in range(len(args.split) + 1):
     table = pd.DataFrame(data=merged_matrix, columns=['Length', 'NumReqPosts'])
     table['NumReqPosts'] = table['NumReqPosts'].map(lambda p: 'Req: ' + str(p))
 
-    r_input = '_r_length_dist_input' + str(s) + '.csv'
+    r_input = '_r_lengths_req_dist_input' + str(s) + '.csv'
     table.to_csv(os.path.join(args.dir, r_input))
     call(["Rscript", "r3_length_reqposts.R", args.dir, r_input, args.output + '_s' + str(s) + '.png'])
     os.remove(os.path.join(args.dir, r_input))

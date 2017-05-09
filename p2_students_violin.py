@@ -16,9 +16,8 @@ parser.add_argument('--dir', help='Working directory. This dir must contain the 
                     'Vis outputs and any intermediate outputs are written to this dir.')
 parser.add_argument('--input', help='Input json filename in the working dir excluding the \'.json\' extension.')
 parser.add_argument('--output', help='Output png filename int the working dir excluding the \'.png\' extension.')
-parser.add_argument('--no_sort', default=True, action='store_true',
-                    help='Do not sort students according to performance. Pick the first "numstudents" students ' +
-                    'in the json data instead.')
+parser.add_argument('--no_sort', action='store_true', help='Do not sort students according to performance. ' +
+                    'Pick the first "numstudents" students in the json data instead.')
 parser.add_argument('--numstudents', type=int, help='Number of students to show violinplots for. ' +
                     'If "no_sort" is not set, students are first sorted based on performance and ' +
                     'violin plots for the lowest performing students are shown')
